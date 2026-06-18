@@ -115,77 +115,6 @@ public class Main {
         }
     }
 
-    static void aggiungiVisitaGenerica(Scanner sc, Paziente p) {
-        print("\nMedico: ");
-        String medico = sc.nextLine();
-
-        print("\nDiagnosi: ");
-        String diagnosi = sc.nextLine();
-
-        print("\nReparto: ");
-        String reparto = sc.nextLine();
-
-        VisitaGenerica visita = new VisitaGenerica(
-            diagnosi,
-            medico,
-            reparto);
-        p.addVisit(visita); //Aggiunge la visita creata all'arraylist
-
-        printSuccess("Visita generica aggiunta correttamente.");
-       
-    }
-
-    static void aggiungiVistaOrtopedica(Scanner sc, Paziente p) {
-
-        print("\nDiagnosi: ");
-        String diagnosi = sc.nextLine();
-
-        print("\nMedico: ");
-        String medico = sc.nextLine();
-
-        print("\nParte del corpo: ");
-        String parteCorpo = sc.nextLine();
-
-        VisitaOrtopedica visita = new VisitaOrtopedica(
-            diagnosi,
-            medico,
-            parteCorpo);
-        p.addVisit(visita); //Aggiunge la visita creata all'arraylist
-
-        printSuccess("Visita ortopedica aggiunta correttamente.");
-      
-    }
-
-    static void aggiungiVisitaCardiologica(Scanner sc, Paziente p) {
-
-        print("\nDiagnosi: ");
-        String diagnosi = sc.nextLine();
-
-        print("\nMedico: ");
-        String medico = sc.nextLine();
-
-        print("\nFrequenza cardiaca: ");
-        int frequenzaCardiaca = Integer.parseInt((sc.nextLine()));
-
-        print("\nPressione sistolica: ");
-        int pressioneSist = Integer.parseInt((sc.nextLine()));
-
-        print("\nPressione diastolica: ");
-        int pressioneDiast = Integer.parseInt((sc.nextLine()));
-
-        VisitaCardiologica visita = new VisitaCardiologica(
-            diagnosi,
-            medico,
-            frequenzaCardiaca,
-            pressioneSist,
-            pressioneDiast
-        );
-
-        p.addVisit(visita); //Aggiunge la visita creata all'arraylist
-        printSuccess("Visita cardiologica aggiunta correttamente.");
-        
-    }
-
     static void aggiungiVisita(Scanner sc) {
         printSection("AGGIUNGI VISITA");
 
@@ -196,24 +125,28 @@ public class Main {
             Paziente p = Clinica.cercaPaziente(cfDaCercare);
 
             int scelta;
-            do {    //Scegliamo che tipo di visita deve essere aggiunta al paziente.
+            do {
                 Menu.stampaMenuVisita();
-                scelta = Integer.parseInt((sc.nextLine()));
+                scelta = Integer.parseInt(sc.nextLine());
 
-                switch (scelta) {
-                    case 1 -> aggiungiVisitaGenerica(sc, p);
-                    case 2 -> aggiungiVistaOrtopedica(sc, p);
-                    case 3 -> aggiungiVisitaCardiologica(sc, p);
+                InterfacciaVisita factory = switch (scelta) {
+                    case 1 -> new VisitaGenericaFactory();
+                    case 2 -> new VisitaOrtopedicaFactory();
+                    case 3 -> new VisitaCardiologicaFactory();
+                    default -> null;
+                };
+
+                if (factory != null) {
+                    Visita visita = factory.creaVisita(sc);
+                    p.addVisit(visita);
                 }
             } while (scelta < 1 || scelta > 3);
 
             printLine();
-       
 
         } catch (PazienteNonTrovatoException e) {
             printError(e.getMessage());
         }
-        
     }
 
     static void stampaSchedaCompleta(Scanner sc) {

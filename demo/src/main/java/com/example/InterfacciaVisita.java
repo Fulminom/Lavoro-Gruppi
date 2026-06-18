@@ -1,6 +1,7 @@
 package com.example;
 
-public interface InterfacciaVisita {
-    public void PazienteLol();
+import java.util.Scanner;
 
+public interface InterfacciaVisita {
+    Visita creaVisita(Scanner sc);
 }

@@ -1,3 +1,5 @@
+package demo.src.main.java.com.example;
+
 public class Menu {
     private static final String MENU = """
             GESTIONE ARCHIVIO PAZIENTI - (ANDREA-NABIL)

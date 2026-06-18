@@ -1,3 +1,5 @@
+package demo.src.main.java.com.example;
+
 import java.util.HashMap;
 import java.util.Scanner;
 

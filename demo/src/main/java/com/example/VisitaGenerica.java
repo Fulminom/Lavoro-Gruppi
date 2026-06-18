@@ -1,3 +1,5 @@
+package demo.src.main.java.com.example;
+
 import java.time.LocalDate;
 
 public class VisitaGenerica extends Visita {

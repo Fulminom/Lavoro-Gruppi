@@ -1,0 +1,37 @@
+import java.time.LocalDate;
+
+public class VisitaGenerica extends Visita {
+    private String reparto; 
+
+    //constructor
+    public VisitaGenerica(String diagnosi, String medico, String reparto) {
+        super(LocalDate.now(), diagnosi, medico); // Data impostata automaticamente alla creazione
+        this.reparto = reparto;
+    }
+
+    // Usato per ricostruire la visita da file mantenendo la data originale
+    public VisitaGenerica(LocalDate data, String priorita, String diagnosi, String medico, String reparto) {
+        super(data, diagnosi, medico);
+        this.reparto = reparto;
+    }
+
+    //getters
+    public String getReparto() {
+        return reparto;
+    }
+
+    @Override
+    public String descriviVisita() {
+        return "Visita Generica - Data:" + getData() +
+                ", Medico:" + getMedico() +
+                ", Diagnosi: " + getDiagnosi() +
+                ", Priorità: " + getPriorita() +
+                ", Reparto: " + reparto;
+    }
+
+    @Override
+    public String getPriorita() {
+        return super.getPriorita();
+    }
+
+}
